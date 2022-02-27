@@ -1,4 +1,4 @@
-module github.com/rancher/k3os
+module edgi.io/cmd/edgi
 
 go 1.16
 

@@ -16,18 +16,18 @@ variable "iso_checksum" {
 
 variable "iso_url" {
   type    = string
-  default = "https://github.com/rancher/k3os/releases/download/v0.20.7-k3s1r0/k3os-amd64.iso"
+  default = "https://edgi.io/cmd/edgi/releases/download/v0.20.7-k3s1r0/edgi-amd64.iso"
 }
 
 variable "password" {
   type    = string
-  default = "rancher"
+  default = "edgi"
 }
 
-source "virtualbox-iso" "k3os" {
+source "virtualbox-iso" "edgi" {
   boot_command = [
-    "rancher", "<enter>",
-    "sudo k3os install", "<enter>",
+    "edgi", "<enter>",
+    "sudo edgi install", "<enter>",
     "1", "<enter>",
     "y", "<enter>",
     "http://{{ .HTTPIP }}:{{ .HTTPPort }}/config.yml", "<enter>",
@@ -46,13 +46,13 @@ source "virtualbox-iso" "k3os" {
   ssh_keypair_name     = ""
   ssh_private_key_file = "packer_rsa"
   ssh_timeout          = "1000s"
-  ssh_username         = "rancher"
+  ssh_username         = "edgi"
 }
 
 build {
-  sources = ["source.virtualbox-iso.k3os"]
+  sources = ["source.virtualbox-iso.edgi"]
 
   post-processor "vagrant" {
-    output = "k3os_{{.Provider}}.box"
+    output = "edgi_{{.Provider}}.box"
   }
 }

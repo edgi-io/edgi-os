@@ -6,14 +6,14 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/rancher/k3os/pkg/system"
+	"edgi.io/cmd/edgi/pkg/system"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"golang.org/x/sys/unix"
 )
 
 var (
-	upgradeK3OS, upgradeK3S             bool
+	upgradeEDGI, upgradeK3S             bool
 	upgradeKernel, upgradeRootFS        bool
 	doRemount, doSync, doReboot         bool
 	sourceDir, destinationDir, lockFile string
@@ -26,64 +26,64 @@ func Command() cli.Command {
 		Usage: "perform upgrades",
 		Flags: []cli.Flag{
 			cli.BoolFlag{
-				Name:        "k3os",
-				EnvVar:      "K3OS_UPGRADE_K3OS",
-				Destination: &upgradeK3OS,
+				Name:        "edgi",
+				EnvVar:      "EDGI_UPGRADE_EDGI",
+				Destination: &upgradeEDGI,
 				Hidden:      true,
 			},
 			cli.BoolFlag{
 				Name:        "k3s",
-				EnvVar:      "K3OS_UPGRADE_K3S",
+				EnvVar:      "EDGI_UPGRADE_K3S",
 				Destination: &upgradeK3S,
 				Hidden:      true,
 			},
 			cli.BoolFlag{
 				Name:        "kernel",
 				Usage:       "upgrade the kernel",
-				EnvVar:      "K3OS_UPGRADE_KERNEL",
+				EnvVar:      "EDGI_UPGRADE_KERNEL",
 				Destination: &upgradeKernel,
 			},
 			cli.BoolFlag{
 				Name:        "rootfs",
-				Usage:       "upgrade k3os+k3s",
-				EnvVar:      "K3OS_UPGRADE_ROOTFS",
+				Usage:       "upgrade edgi+k3s",
+				EnvVar:      "EDGI_UPGRADE_ROOTFS",
 				Destination: &upgradeRootFS,
 			},
 			cli.BoolFlag{
 				Name:        "remount",
 				Usage:       "pre-upgrade remount?",
-				EnvVar:      "K3OS_UPGRADE_REMOUNT",
+				EnvVar:      "EDGI_UPGRADE_REMOUNT",
 				Destination: &doRemount,
 			},
 			cli.BoolFlag{
 				Name:        "sync",
 				Usage:       "post-upgrade sync?",
-				EnvVar:      "K3OS_UPGRADE_SYNC",
+				EnvVar:      "EDGI_UPGRADE_SYNC",
 				Destination: &doSync,
 			},
 			cli.BoolFlag{
 				Name:        "reboot",
 				Usage:       "post-upgrade reboot?",
-				EnvVar:      "K3OS_UPGRADE_REBOOT",
+				EnvVar:      "EDGI_UPGRADE_REBOOT",
 				Destination: &doReboot,
 			},
 			cli.StringFlag{
 				Name:        "source",
-				EnvVar:      "K3OS_UPGRADE_SOURCE",
+				EnvVar:      "EDGI_UPGRADE_SOURCE",
 				Value:       system.RootPath(),
 				Required:    true,
 				Destination: &sourceDir,
 			},
 			cli.StringFlag{
 				Name:        "destination",
-				EnvVar:      "K3OS_UPGRADE_DESTINATION",
+				EnvVar:      "EDGI_UPGRADE_DESTINATION",
 				Value:       system.RootPath(),
 				Required:    true,
 				Destination: &destinationDir,
 			},
 			cli.StringFlag{
 				Name:        "lock-file",
-				EnvVar:      "K3OS_UPGRADE_LOCK_FILE",
+				EnvVar:      "EDGI_UPGRADE_LOCK_FILE",
 				Value:       system.StatePath("upgrade.lock"),
 				Hidden:      true,
 				Destination: &lockFile,
@@ -97,9 +97,9 @@ func Command() cli.Command {
 			}
 			if upgradeRootFS {
 				upgradeK3S = true
-				upgradeK3OS = true
+				upgradeEDGI = true
 			}
-			if !upgradeK3OS && !upgradeK3S && !upgradeKernel {
+			if !upgradeEDGI && !upgradeK3S && !upgradeKernel {
 				cli.ShowSubcommandHelp(c)
 				logrus.Error("must specify components to upgrade, e.g. `rootfs`, `kernel`")
 				os.Exit(1)
@@ -132,8 +132,8 @@ func Run(_ *cli.Context) {
 
 	var atLeastOneComponentCopied bool
 
-	if upgradeK3OS {
-		if copied, err := system.CopyComponent(sourceDir, destinationDir, doRemount, "k3os"); err != nil {
+	if upgradeEDGI {
+		if copied, err := system.CopyComponent(sourceDir, destinationDir, doRemount, "edgi"); err != nil {
 			logrus.Error(err)
 		} else if copied {
 			atLeastOneComponentCopied = true

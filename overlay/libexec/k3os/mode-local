@@ -2,20 +2,20 @@
 
 setup_ssh()
 {
-    if [ ! -e /var/lib/rancher/k3os/ssh ]; then
-        mkdir -p /var/lib/rancher/k3os
-        cp -rf /etc/ssh /var/lib/rancher/k3os/ssh
+    if [ ! -e /var/lib/cmd/edgi/ssh ]; then
+        mkdir -p /var/lib/cmd/edgi
+        cp -rf /etc/ssh /var/lib/cmd/edgi/ssh
     fi
     rm -rf /etc/ssh
-    ln -s /var/lib/rancher/k3os/ssh /etc/ssh
+    ln -s /var/lib/cmd/edgi/ssh /etc/ssh
 }
 
-setup_rancher_node()
+setup_edgi_node()
 {
-    mkdir -p /etc/rancher
-    mkdir -p /var/lib/rancher/k3os/node
-    ln -s /var/lib/rancher/k3os/node /etc/rancher/
+    mkdir -p /etc/edgi
+    mkdir -p /var/lib/cmd/edgi/node
+    ln -s /var/lib/cmd/edgi/node /etc/edgi/
 }
 
 setup_ssh
-setup_rancher_node
+setup_edgi_node

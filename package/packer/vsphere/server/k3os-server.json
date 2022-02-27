@@ -5,9 +5,9 @@
       "RAM": 2048,
       "RAM_reserve_all": true,
       "boot_command": [
-        "rancher",
+        "edgi",
         "<enter>",
-        "sudo k3os install",
+        "sudo edgi install",
         "<enter>",
         "1",
         "<enter>",
@@ -15,9 +15,9 @@
         "<enter>",
         "N",
         "<enter>",
-        "{{user `rancher_password`}}",
+        "{{user `edgi_password`}}",
         "<enter>",
-        "{{user `rancher_password`}}",
+        "{{user `edgi_password`}}",
         "<enter>",
         "N",
         "<enter>",
@@ -48,7 +48,7 @@
       ],
       "password": "{{user `vcenter_password`}}",
       "shutdown_command": "sudo poweroff",
-      "ssh_password": "{{user `rancher_password`}}",
+      "ssh_password": "{{user `edgi_password`}}",
       "ssh_username": "{{user `ssh_username`}}",
       "storage": [
         {

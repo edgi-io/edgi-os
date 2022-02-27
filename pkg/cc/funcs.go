@@ -11,15 +11,15 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/rancher/k3os/pkg/command"
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/hostname"
-	"github.com/rancher/k3os/pkg/mode"
-	"github.com/rancher/k3os/pkg/module"
-	"github.com/rancher/k3os/pkg/ssh"
-	"github.com/rancher/k3os/pkg/sysctl"
-	"github.com/rancher/k3os/pkg/version"
-	"github.com/rancher/k3os/pkg/writefile"
+	"edgi.io/cmd/edgi/pkg/command"
+	"edgi.io/cmd/edgi/pkg/config"
+	"edgi.io/cmd/edgi/pkg/hostname"
+	"edgi.io/cmd/edgi/pkg/mode"
+	"edgi.io/cmd/edgi/pkg/module"
+	"edgi.io/cmd/edgi/pkg/ssh"
+	"edgi.io/cmd/edgi/pkg/sysctl"
+	"edgi.io/cmd/edgi/pkg/version"
+	"edgi.io/cmd/edgi/pkg/writefile"
 	"github.com/sirupsen/logrus"
 )
 
@@ -36,7 +36,7 @@ func ApplyHostname(cfg *config.CloudConfig) error {
 }
 
 func ApplyPassword(cfg *config.CloudConfig) error {
-	return command.SetPassword(cfg.K3OS.Password)
+	return command.SetPassword(cfg.EDGI.Password)
 }
 
 func ApplyRuncmd(cfg *config.CloudConfig) error {
@@ -94,7 +94,7 @@ func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
 		k3sLocalExists = true
 	}
 
-	args := cfg.K3OS.K3sArgs
+	args := cfg.EDGI.K3sArgs
 	vars := []string{
 		"INSTALL_K3S_NAME=service",
 	}
@@ -117,42 +117,42 @@ func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
 		vars = append(vars, "INSTALL_K3S_SKIP_START=true")
 	}
 
-	if cfg.K3OS.ServerURL == "" {
+	if cfg.EDGI.ServerURL == "" {
 		if len(args) == 0 {
 			args = append(args, "server")
 		}
 	} else {
-		vars = append(vars, fmt.Sprintf("K3S_URL=%s", cfg.K3OS.ServerURL))
+		vars = append(vars, fmt.Sprintf("K3S_URL=%s", cfg.EDGI.ServerURL))
 		if len(args) == 0 {
 			args = append(args, "agent")
 		}
 	}
 
-	if strings.HasPrefix(cfg.K3OS.Token, "K10") {
-		vars = append(vars, fmt.Sprintf("K3S_TOKEN=%s", cfg.K3OS.Token))
-	} else if cfg.K3OS.Token != "" {
-		vars = append(vars, fmt.Sprintf("K3S_CLUSTER_SECRET=%s", cfg.K3OS.Token))
+	if strings.HasPrefix(cfg.EDGI.Token, "K10") {
+		vars = append(vars, fmt.Sprintf("K3S_TOKEN=%s", cfg.EDGI.Token))
+	} else if cfg.EDGI.Token != "" {
+		vars = append(vars, fmt.Sprintf("K3S_CLUSTER_SECRET=%s", cfg.EDGI.Token))
 	}
 
 	var labels []string
-	for k, v := range cfg.K3OS.Labels {
+	for k, v := range cfg.EDGI.Labels {
 		labels = append(labels, fmt.Sprintf("%s=%s", k, v))
 	}
 	if mode != "" {
-		labels = append(labels, fmt.Sprintf("k3os.io/mode=%s", mode))
+		labels = append(labels, fmt.Sprintf("edgi.io/mode=%s", mode))
 	}
-	labels = append(labels, fmt.Sprintf("k3os.io/version=%s", version.Version))
+	labels = append(labels, fmt.Sprintf("edgi.io/version=%s", version.Version))
 	sort.Strings(labels)
 
 	for _, l := range labels {
 		args = append(args, "--node-label", l)
 	}
 
-	for _, taint := range cfg.K3OS.Taints {
+	for _, taint := range cfg.EDGI.Taints {
 		args = append(args, "--kubelet-arg", "register-with-taints="+taint)
 	}
 
-	cmd := exec.Command("/usr/libexec/k3os/k3s-install.sh", args...)
+	cmd := exec.Command("/usr/libexec/edgi/k3s-install.sh", args...)
 	cmd.Env = append(os.Environ(), vars...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
@@ -171,7 +171,7 @@ func ApplyInstall(cfg *config.CloudConfig) error {
 		return nil
 	}
 
-	cmd := exec.Command("k3os", "install")
+	cmd := exec.Command("edgi", "install")
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout
 	cmd.Stdin = os.Stdin
@@ -183,8 +183,8 @@ func ApplyDNS(cfg *config.CloudConfig) error {
 	buf.WriteString("[General]\n")
 	buf.WriteString("NetworkInterfaceBlacklist=veth\n")
 	buf.WriteString("PreferredTechnologies=ethernet,wifi\n")
-	if len(cfg.K3OS.DNSNameservers) > 0 {
-		dns := strings.Join(cfg.K3OS.DNSNameservers, ",")
+	if len(cfg.EDGI.DNSNameservers) > 0 {
+		dns := strings.Join(cfg.EDGI.DNSNameservers, ",")
 		buf.WriteString("FallbackNameservers=")
 		buf.WriteString(dns)
 		buf.WriteString("\n")
@@ -192,8 +192,8 @@ func ApplyDNS(cfg *config.CloudConfig) error {
 		buf.WriteString("FallbackNameservers=8.8.8.8\n")
 	}
 
-	if len(cfg.K3OS.NTPServers) > 0 {
-		ntp := strings.Join(cfg.K3OS.NTPServers, ",")
+	if len(cfg.EDGI.NTPServers) > 0 {
+		ntp := strings.Join(cfg.EDGI.NTPServers, ",")
 		buf.WriteString("FallbackTimeservers=")
 		buf.WriteString(ntp)
 		buf.WriteString("\n")
@@ -208,7 +208,7 @@ func ApplyDNS(cfg *config.CloudConfig) error {
 }
 
 func ApplyWifi(cfg *config.CloudConfig) error {
-	if len(cfg.K3OS.Wifi) == 0 {
+	if len(cfg.EDGI.Wifi) == 0 {
 		return nil
 	}
 
@@ -233,7 +233,7 @@ func ApplyWifi(cfg *config.CloudConfig) error {
 	buf.WriteString("Name=cloud-config\n")
 	buf.WriteString("Description=Services defined in the cloud-config\n")
 
-	for i, w := range cfg.K3OS.Wifi {
+	for i, w := range cfg.EDGI.Wifi {
 		name := fmt.Sprintf("wifi%d", i)
 		buf.WriteString("[service_")
 		buf.WriteString(name)
@@ -255,11 +255,11 @@ func ApplyWifi(cfg *config.CloudConfig) error {
 }
 
 func ApplyDataSource(cfg *config.CloudConfig) error {
-	if len(cfg.K3OS.DataSources) == 0 {
+	if len(cfg.EDGI.DataSources) == 0 {
 		return nil
 	}
 
-	args := strings.Join(cfg.K3OS.DataSources, " ")
+	args := strings.Join(cfg.EDGI.DataSources, " ")
 	buf := &bytes.Buffer{}
 
 	buf.WriteString("command_args=\"")
@@ -274,10 +274,10 @@ func ApplyDataSource(cfg *config.CloudConfig) error {
 }
 
 func ApplyEnvironment(cfg *config.CloudConfig) error {
-	if len(cfg.K3OS.Environment) == 0 {
+	if len(cfg.EDGI.Environment) == 0 {
 		return nil
 	}
-	env := make(map[string]string, len(cfg.K3OS.Environment))
+	env := make(map[string]string, len(cfg.EDGI.Environment))
 	if buf, err := ioutil.ReadFile("/etc/environment"); err == nil {
 		scanner := bufio.NewScanner(bytes.NewReader(buf))
 		for scanner.Scan() {
@@ -301,7 +301,7 @@ func ApplyEnvironment(cfg *config.CloudConfig) error {
 			}
 		}
 	}
-	for key, val := range cfg.K3OS.Environment {
+	for key, val := range cfg.EDGI.Environment {
 		env[key] = val
 	}
 	buf := &bytes.Buffer{}

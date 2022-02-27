@@ -10,7 +10,7 @@ assignees: ''
 <!-- Thanks for helping us to improve k3OS! We welcome all bug reports. Please fill out each area of the template so we can better help you.  ***You can delete this message portion of the bug report.*** -->
 
 **Version (k3OS / kernel)**
-<!-- Provide output from `k3os --version` OR `sh -c '. /etc/os-release;echo $VERSION_ID'` -->
+<!-- Provide output from `edgi --version` OR `sh -c '. /etc/os-release;echo $VERSION_ID'` -->
 <!-- Provide output from `uname --kernel-release --kernel-version` -->
 
 **Architecture**

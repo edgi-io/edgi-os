@@ -5,11 +5,11 @@ import (
 	"path"
 	"strings"
 
-	"github.com/rancher/k3os/pkg/config"
+	"edgi.io/cmd/edgi/pkg/config"
 )
 
 func ConfigureSysctl(cfg *config.CloudConfig) error {
-	for k, v := range cfg.K3OS.Sysctls {
+	for k, v := range cfg.EDGI.Sysctls {
 		elements := []string{"/proc", "sys"}
 		elements = append(elements, strings.Split(k, ".")...)
 		path := path.Join(elements...)

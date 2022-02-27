@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-type K3OS struct {
+type EDGI struct {
 	DataSources    []string          `json:"dataSources,omitempty"`
 	Modules        []string          `json:"modules,omitempty"`
 	Sysctls        map[string]string `json:"sysctls,omitempty"`
@@ -44,7 +44,7 @@ type CloudConfig struct {
 	SSHAuthorizedKeys []string `json:"sshAuthorizedKeys,omitempty"`
 	WriteFiles        []File   `json:"writeFiles,omitempty"`
 	Hostname          string   `json:"hostname,omitempty"`
-	K3OS              K3OS     `json:"k3os,omitempty"`
+	EDGI              EDGI     `json:"edgi,omitempty"`
 	Runcmd            []string `json:"runCmd,omitempty"`
 	Bootcmd           []string `json:"bootCmd,omitempty"`
 	Initcmd           []string `json:"initCmd,omitempty"`

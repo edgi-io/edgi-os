@@ -7,8 +7,8 @@ import (
 	"os/exec"
 	"path"
 
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/util"
+	"edgi.io/cmd/edgi/pkg/config"
+	"edgi.io/cmd/edgi/pkg/util"
 	"github.com/sirupsen/logrus"
 )
 

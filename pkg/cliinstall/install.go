@@ -7,8 +7,8 @@ import (
 	"os/exec"
 
 	"github.com/ghodss/yaml"
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/questions"
+	"edgi.io/cmd/edgi/pkg/config"
+	"edgi.io/cmd/edgi/pkg/questions"
 )
 
 func Run() error {
@@ -69,7 +69,7 @@ func runInstall(cfg config.CloudConfig) error {
 		return err
 	}
 
-	if !cfg.K3OS.Install.Silent {
+	if !cfg.EDGI.Install.Silent {
 		val, err := questions.PromptBool("\nConfiguration\n"+"-------------\n\n"+
 			string(installBytes)+
 			"\nYour disk will be formatted and k3OS will be installed with the above configuration.\nContinue?", false)
@@ -78,14 +78,14 @@ func runInstall(cfg config.CloudConfig) error {
 		}
 	}
 
-	if cfg.K3OS.Install.ConfigURL == "" {
-		tempFile, err = ioutil.TempFile("/tmp", "k3os.XXXXXXXX")
+	if cfg.EDGI.Install.ConfigURL == "" {
+		tempFile, err = ioutil.TempFile("/tmp", "edgi.XXXXXXXX")
 		if err != nil {
 			return err
 		}
 		defer tempFile.Close()
 
-		cfg.K3OS.Install.ConfigURL = tempFile.Name()
+		cfg.EDGI.Install.ConfigURL = tempFile.Name()
 	}
 
 	ev, err := config.ToEnv(cfg)
@@ -94,7 +94,7 @@ func runInstall(cfg config.CloudConfig) error {
 	}
 
 	if tempFile != nil {
-		cfg.K3OS.Install = nil
+		cfg.EDGI.Install = nil
 		bytes, err := yaml.Marshal(&cfg)
 		if err != nil {
 			return err
@@ -108,7 +108,7 @@ func runInstall(cfg config.CloudConfig) error {
 		defer os.Remove(tempFile.Name())
 	}
 
-	cmd := exec.Command("/usr/libexec/k3os/install")
+	cmd := exec.Command("/usr/libexec/edgi/install")
 	cmd.Env = append(os.Environ(), ev...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout

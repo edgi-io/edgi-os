@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/ghodss/yaml"
-	"github.com/rancher/k3os/pkg/system"
+	"edgi.io/cmd/edgi/pkg/system"
 	"github.com/rancher/mapper"
 	"github.com/rancher/mapper/convert"
 	merge2 "github.com/rancher/mapper/convert/merge"
@@ -75,7 +75,7 @@ func ReadConfig() (CloudConfig, error) {
 
 func readersToObject(readers ...reader) (CloudConfig, error) {
 	result := CloudConfig{
-		K3OS: K3OS{
+		EDGI: EDGI{
 			Install: &Install{},
 		},
 	}

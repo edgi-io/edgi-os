@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TARGET=/run/k3os/target
+TARGET=/run/edgi/target
 
 source /usr/lib/os-release
 
@@ -16,14 +16,14 @@ grow()
 setup_mounts()
 {
     mkdir -p $TARGET
-    mount -L K3OS_STATE $TARGET
+    mount -L EDGI_STATE $TARGET
 
-    if [ -e $TARGET/k3os/system/growpart ]; then
-        read DEV NUM < $TARGET/k3os/system/growpart
+    if [ -e $TARGET/edgi/system/growpart ]; then
+        read DEV NUM < $TARGET/edgi/system/growpart
         if [ ! -e "${DEV}${NUM}" ]; then
             # /dev/sda2 => /dev/sda2
             # /dev/nvme0n1p2 => /dev/nvme0n1p2
-            PART=$(blkid -L K3OS_STATE)
+            PART=$(blkid -L EDGI_STATE)
 
             # /dev/sda2 => /dev/sda
             # /dev/nvme0n1p2 => /dev/nvme0n1
@@ -36,42 +36,42 @@ setup_mounts()
         if [ -e "${PART:=${DEV}${NUM}}" ]; then
             umount $TARGET
             grow $DEV $NUM $PART || true
-            mount -L K3OS_STATE $TARGET
+            mount -L EDGI_STATE $TARGET
         fi
-        rm -f $TARGET/k3os/system/growpart
+        rm -f $TARGET/edgi/system/growpart
     fi
 }
 
 setup_kernel_squashfs()
 {
-    KER_SRC="/.base/k3os/system/kernel/$(uname -r)/kernel.squashfs"
-    KER_DEST="$TARGET/k3os/system/kernel/$(uname -r)/kernel.squashfs"
+    KER_SRC="/.base/edgi/system/kernel/$(uname -r)/kernel.squashfs"
+    KER_DEST="$TARGET/edgi/system/kernel/$(uname -r)/kernel.squashfs"
     if [ -e $KER_SRC ] && [ ! -e $KER_DEST ]; then
         mkdir -p $(dirname ${KER_DEST})
         cp -r $KER_SRC $KER_DEST
     fi
 }
 
-setup_k3os()
+setup_edgi()
 {
-    if [ -e $TARGET/k3os/system/k3os/current/k3os ]; then
+    if [ -e $TARGET/edgi/system/edgi/current/edgi ]; then
         return 0
     fi
 
-    K3OS_SRC=/.base/k3os/system/k3os/current/k3os
-    K3OS_FILE=$TARGET/k3os/system/k3os/${VERSION_ID}/k3os
+    EDGI_SRC=/.base/edgi/system/edgi/current/edgi
+    EDGI_FILE=$TARGET/edgi/system/edgi/${VERSION_ID}/edgi
 
-    if [ ! -e ${K3OS_SRC} ]; then
+    if [ ! -e ${EDGI_SRC} ]; then
         return 0
     fi
 
-    if [ ! -e ${K3OS_FILE} ]; then
-        mkdir -p $(dirname ${K3OS_FILE}.tmp)
-        cp -f ${K3OS_SRC} ${K3OS_FILE}.tmp
-        mv -f ${K3OS_FILE}.tmp ${K3OS_FILE}
+    if [ ! -e ${EDGI_FILE} ]; then
+        mkdir -p $(dirname ${EDGI_FILE}.tmp)
+        cp -f ${EDGI_SRC} ${EDGI_FILE}.tmp
+        mv -f ${EDGI_FILE}.tmp ${EDGI_FILE}
     fi
 
-    ln -sf ${VERSION_ID} $TARGET/k3os/system/k3os/current
+    ln -sf ${VERSION_ID} $TARGET/edgi/system/edgi/current
 }
 
 setup_init()
@@ -81,16 +81,16 @@ setup_init()
     fi
 
     mkdir -p $TARGET/sbin
-    ln -sf ../k3os/system/k3os/current/k3os $TARGET/sbin/init
+    ln -sf ../edgi/system/edgi/current/edgi $TARGET/sbin/init
 }
 
 setup_k3s()
 {
-    if [ -e $TARGET/k3os/system/k3s/current/k3s ]; then
+    if [ -e $TARGET/edgi/system/k3s/current/k3s ]; then
         return 0
     fi
 
-    for i in $(ls -drt $TARGET/k3os/system/k3s/*); do
+    for i in $(ls -drt $TARGET/edgi/system/k3s/*); do
         if [ ! -L "$i" ]; then
             LATEST=$i
             break
@@ -98,18 +98,18 @@ setup_k3s()
     done
 
     if [ -e "${LATEST}" ]; then
-        ln -sf $(basename "${LATEST}") $TARGET/k3os/system/k3s/current
+        ln -sf $(basename "${LATEST}") $TARGET/edgi/system/k3s/current
         return 0
     fi
 }
 
 takeover()
 {
-    if [ ! -e k3os/system/takeover ]; then
+    if [ ! -e edgi/system/takeover ]; then
         return 0
     fi
 
-    touch k3os/system/factory-reset
+    touch edgi/system/factory-reset
 
     if [ -L sbin ]; then
       rm -f sbin
@@ -117,7 +117,7 @@ takeover()
 
     for i in *; do
         case $i in
-            boot|k3os|sbin)
+            boot|edgi|sbin)
                 ;;
             *)
                 rm -rf $i
@@ -125,7 +125,7 @@ takeover()
     done
     for i in sbin/*; do
         case $i in
-            sbin/init|sbin/k3s|sbin/k3os)
+            sbin/init|sbin/k3s|sbin/edgi)
                 ;;
             *)
                 rm -rf "$i"
@@ -133,12 +133,12 @@ takeover()
     done
 
     rm -rf boot/[^g]*
-    rm -f k3os/system/takeover
-    rm -rf k3os/data
+    rm -f edgi/system/takeover
+    rm -rf edgi/data
     sync
     
-    if [ -e k3os/system/poweroff ]; then
-        rm -f k3os/system/poweroff
+    if [ -e edgi/system/poweroff ]; then
+        rm -f edgi/system/poweroff
         sync
         poweroff -f
     else
@@ -147,7 +147,7 @@ takeover()
 }
 
 setup_mounts
-setup_k3os
+setup_edgi
 setup_kernel_squashfs
 setup_init
 setup_k3s
@@ -156,12 +156,12 @@ cd $TARGET
 
 takeover || true
 
-if [ -e k3os/system/factory-reset ] || [ -e k3os/system/ephemeral ]; then
-    rm -rf k3os/data k3os/system/factory-reset
+if [ -e edgi/system/factory-reset ] || [ -e edgi/system/ephemeral ]; then
+    rm -rf edgi/data edgi/system/factory-reset
 fi
 
 losetup -d /dev/loop0 || true
 mount --make-rprivate /
 mkdir -p .root
 pivot_root . .root
-K3OS_MODE=local exec /sbin/init
+EDGI_MODE=local exec /sbin/init

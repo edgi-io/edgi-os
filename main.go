@@ -9,9 +9,9 @@ import (
 
 	"github.com/docker/docker/pkg/mount"
 	"github.com/docker/docker/pkg/reexec"
-	"github.com/rancher/k3os/pkg/cli/app"
-	"github.com/rancher/k3os/pkg/enterchroot"
-	"github.com/rancher/k3os/pkg/transferroot"
+	"edgi.io/cmd/edgi/pkg/cli/app"
+	"edgi.io/cmd/edgi/pkg/enterchroot"
+	"edgi.io/cmd/edgi/pkg/transferroot"
 	"github.com/sirupsen/logrus"
 )
 
@@ -37,12 +37,12 @@ func main() {
 }
 
 func initrd() {
-	enterchroot.DebugCmdline = "k3os.debug"
+	enterchroot.DebugCmdline = "edgi.debug"
 	transferroot.Relocate()
 	if err := mount.Mount("", "/", "none", "rw,remount"); err != nil {
 		logrus.Errorf("failed to remount root as rw: %v", err)
 	}
-	if err := enterchroot.Mount("./k3os/data", os.Args, os.Stdout, os.Stderr); err != nil {
+	if err := enterchroot.Mount("./edgi/data", os.Args, os.Stdout, os.Stderr); err != nil {
 		logrus.Fatalf("failed to enter root: %v", err)
 	}
 }

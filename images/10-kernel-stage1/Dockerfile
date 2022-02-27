@@ -18,7 +18,7 @@ RUN apt-get --assume-yes update \
 
 ARG ARCH
 ENV KVERSION=5.4.0-88-generic
-ENV URL=https://github.com/rancher/k3os-kernel/releases/download/5.4.0-88.99-rancher1
+ENV URL=https://edgi.io/cmd/edgi-kernel/releases/download/5.15.0‑22.22
 ENV KERNEL_XZ=${URL}/kernel-generic_${ARCH}.tar.xz
 ENV KERNEL_EXTRA_XZ=${URL}/kernel-extra-generic_${ARCH}.tar.xz
 ENV KERNEL_HEADERS_XZ=${URL}/kernel-headers-generic_${ARCH}.tar.xz

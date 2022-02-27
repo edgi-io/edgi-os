@@ -7,7 +7,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/rancher/k3os/pkg/config"
+	"edgi.io/cmd/edgi/pkg/config"
 )
 
 func SetHostname(c *config.CloudConfig) error {

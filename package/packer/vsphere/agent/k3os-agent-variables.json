@@ -6,10 +6,10 @@
     "vcenter_folder": "Packer_Images",
     "vcenter_host":"esxi_hostname/IP",
     "vcenter_network": "192.168.50.x-24",
-    "vcenter_iso_path": "[raid0] ISOs/k3os-amd64.iso",
-    "template_name": "k3os-agent-template",
-    "ssh_username": "rancher",
-    "rancher_password": "YourPasswordHere",
+    "vcenter_iso_path": "[raid0] ISOs/edgi-amd64.iso",
+    "template_name": "edgi-agent-template",
+    "ssh_username": "edgi",
+    "edgi_password": "YourPasswordHere",
     "server_url": "https://k3s.server:6443",
     "server_token": "YourTokenHere"
 }

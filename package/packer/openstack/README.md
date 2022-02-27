@@ -55,7 +55,7 @@ $ openstack server create \
 > --network $OS_NETWORK_ID \
 > --flavor $OS_FLAVOR \
 > --key-name Deadline \
-> --wait k3os-test
+> --wait edgi-test
 
 +-----------------------------+-----------------------------------------------------------+
 | Field                       | Value                                                     |
@@ -70,7 +70,7 @@ $ openstack server create \
 | id                          | f82eff0c-7adf-496c-88f5-3e40a51fa77a                      |
 | image                       | k3OS-v0.10.3-amd64 (398801c7-eaa8-46d1-bee2-e53f60b64c3b) |
 | key_name                    | Deadline                                                  |
-| name                        | k3os-test                                                 |
+| name                        | edgi-test                                                 |
 | security_groups             | name='default'                                            |
 | status                      | ACTIVE                                                    |
 | updated                     | 2020-07-21T14:33:20Z                                      |
@@ -79,9 +79,9 @@ $ openstack server create \
 $ openstack floating ip create $OS_FLOATING_IP_POOL | grep floating_ip_address
 | floating_ip_address | 193.16.42.77 |
 
-$ openstack server add floating ip k3os-test 193.16.42.77
+$ openstack server add floating ip edgi-test 193.16.42.77
 
-$ ssh rancher@193.16.42.77
+$ ssh edgi@193.16.42.77
 
 Warning: Permanently added '193.16.42.77' (ECDSA) to the list of known hosts.
 Welcome to k3OS!

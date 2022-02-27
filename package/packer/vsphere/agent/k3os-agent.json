@@ -28,13 +28,13 @@
 
     "iso_paths": [ "{{user `vcenter_iso_path`}}"],
     "ssh_username": "{{user `ssh_username`}}",
-    "ssh_password": "{{user `rancher_password`}}",
+    "ssh_password": "{{user `edgi_password`}}",
 
     "boot_wait": "30s",
     "boot_command": [
-      "rancher",
+      "edgi",
       "<enter>",
-      "sudo k3os install",
+      "sudo edgi install",
       "<enter>",
       "1",
       "<enter>",
@@ -42,9 +42,9 @@
       "<enter>",
       "N",
       "<enter>",
-      "{{user `rancher_password`}}",
+      "{{user `edgi_password`}}",
       "<enter>",
-      "{{user `rancher_password`}}",
+      "{{user `edgi_password`}}",
       "<enter>",
       "N",
       "<enter>",

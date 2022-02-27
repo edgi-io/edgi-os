@@ -11,7 +11,7 @@ packer build .
 2. Import vagrant box
 
 ```bash
-vagrant box add --provider libvirt k3os k3os_libvirt.box
+vagrant box add --provider libvirt edgi edgi_libvirt.box
 ```
 
 3. Run the Vagrant box:
@@ -33,19 +33,19 @@ limitation, one have to set the `upload_path` option.
 
 ```
 config.vm.provision 'shell',
-  upload_path: '/home/rancher/vagrant-shell',
+  upload_path: '/home/edgi/vagrant-shell',
   inline: <<-SHELL
 mkdir -p /mnt
 mount /dev/sda1 /mnt
-cat <<EOF > /mnt/k3os/system/config.yaml
-k3os:
+cat <<EOF > /mnt/edgi/system/config.yaml
+edgi:
   token: EbvX0V38syjPQBZJ71tb9EIHbyL5mISBqDSTa2aJt7LSCF1JEW
-  password: rancher
+  password: edgi
 EOF
 reboot
 SHELL
 ```
 
 The above example also shows how the k3OS config can be changed. When
-you do so, you have to set the password to `rancher`. If this is not the
+you do so, you have to set the password to `edgi`. If this is not the
 case, vagrant will not be able to login.

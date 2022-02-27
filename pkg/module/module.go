@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/paultag/go-modprobe"
-	"github.com/rancher/k3os/pkg/config"
+	"edgi.io/cmd/edgi/pkg/config"
 	"github.com/sirupsen/logrus"
 )
 
@@ -26,7 +26,7 @@ func LoadModules(cfg *config.CloudConfig) error {
 	for sc.Scan() {
 		loaded[strings.SplitN(sc.Text(), " ", 2)[0]] = true
 	}
-	modules := cfg.K3OS.Modules
+	modules := cfg.EDGI.Modules
 	for _, m := range modules {
 		if loaded[m] {
 			continue

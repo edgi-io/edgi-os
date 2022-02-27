@@ -9,10 +9,10 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/rancher/k3os/pkg/config"
-	"github.com/rancher/k3os/pkg/mode"
-	"github.com/rancher/k3os/pkg/questions"
-	"github.com/rancher/k3os/pkg/util"
+	"edgi.io/cmd/edgi/pkg/config"
+	"edgi.io/cmd/edgi/pkg/mode"
+	"edgi.io/cmd/edgi/pkg/questions"
+	"edgi.io/cmd/edgi/pkg/util"
 )
 
 func Ask(cfg *config.CloudConfig) (bool, error) {
@@ -50,7 +50,7 @@ func isInstall(cfg *config.CloudConfig) (bool, error) {
 }
 
 func AskInstall(cfg *config.CloudConfig) error {
-	if cfg.K3OS.Install.Silent {
+	if cfg.EDGI.Install.Silent {
 		return nil
 	}
 
@@ -62,7 +62,7 @@ func AskInstall(cfg *config.CloudConfig) error {
 		return err
 	}
 
-	if cfg.K3OS.Install.ConfigURL == "" {
+	if cfg.EDGI.Install.ConfigURL == "" {
 		if err := AskGithub(cfg); err != nil {
 			return err
 		}
@@ -84,7 +84,7 @@ func AskInstall(cfg *config.CloudConfig) error {
 }
 
 func AskInstallDevice(cfg *config.CloudConfig) error {
-	if cfg.K3OS.Install.Device != "" {
+	if cfg.EDGI.Install.Device != "" {
 		return nil
 	}
 
@@ -98,7 +98,7 @@ func AskInstallDevice(cfg *config.CloudConfig) error {
 		return err
 	}
 
-	cfg.K3OS.Install.Device = "/dev/" + fields[i]
+	cfg.EDGI.Install.Device = "/dev/" + fields[i]
 	return nil
 }
 
@@ -108,7 +108,7 @@ func AskToken(cfg *config.CloudConfig, server bool) error {
 		err   error
 	)
 
-	if cfg.K3OS.Token != "" {
+	if cfg.EDGI.Token != "" {
 		return nil
 	}
 
@@ -121,7 +121,7 @@ func AskToken(cfg *config.CloudConfig, server bool) error {
 	} else {
 		token, err = questions.Prompt(msg+": ", "")
 	}
-	cfg.K3OS.Token = token
+	cfg.EDGI.Token = token
 
 	return err
 }
@@ -133,7 +133,7 @@ func isServer(cfg *config.CloudConfig) (bool, error) {
 	}
 	if mode == "live-server" {
 		return true, nil
-	} else if mode == "live-agent" || (cfg.K3OS.ServerURL != "" && cfg.K3OS.Token != "") {
+	} else if mode == "live-agent" || (cfg.EDGI.ServerURL != "" && cfg.EDGI.Token != "") {
 		return false, nil
 	}
 
@@ -147,7 +147,7 @@ func isServer(cfg *config.CloudConfig) (bool, error) {
 }
 
 func AskServerAgent(cfg *config.CloudConfig) error {
-	if cfg.K3OS.ServerURL != "" {
+	if cfg.EDGI.ServerURL != "" {
 		return nil
 	}
 
@@ -164,13 +164,13 @@ func AskServerAgent(cfg *config.CloudConfig) error {
 	if err != nil {
 		return err
 	}
-	cfg.K3OS.ServerURL = url
+	cfg.EDGI.ServerURL = url
 
 	return AskToken(cfg, false)
 }
 
 func AskPassword(cfg *config.CloudConfig) error {
-	if len(cfg.SSHAuthorizedKeys) > 0 || cfg.K3OS.Password != "" {
+	if len(cfg.SSHAuthorizedKeys) > 0 || cfg.EDGI.Password != "" {
 		return nil
 	}
 
@@ -188,7 +188,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 	}
 
 	if os.Getuid() != 0 {
-		cfg.K3OS.Password = pass
+		cfg.EDGI.Password = pass
 		return nil
 	}
 
@@ -201,7 +201,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 	}()
 
 	cmd := exec.Command("chpasswd")
-	cmd.Stdin = strings.NewReader(fmt.Sprintf("rancher:%s", pass))
+	cmd.Stdin = strings.NewReader(fmt.Sprintf("edgi:%s", pass))
 	errBuffer := &bytes.Buffer{}
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = errBuffer
@@ -220,8 +220,8 @@ func AskPassword(cfg *config.CloudConfig) error {
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 		fields := strings.Split(scanner.Text(), ":")
-		if len(fields) > 1 && fields[0] == "rancher" {
-			cfg.K3OS.Password = fields[1]
+		if len(fields) > 1 && fields[0] == "edgi" {
+			cfg.EDGI.Password = fields[1]
 			return nil
 		}
 	}
@@ -230,7 +230,7 @@ func AskPassword(cfg *config.CloudConfig) error {
 }
 
 func AskWifi(cfg *config.CloudConfig) error {
-	if len(cfg.K3OS.Wifi) > 0 {
+	if len(cfg.EDGI.Wifi) > 0 {
 		return nil
 	}
 
@@ -250,7 +250,7 @@ func AskWifi(cfg *config.CloudConfig) error {
 			return err
 		}
 
-		cfg.K3OS.Wifi = append(cfg.K3OS.Wifi, config.Wifi{
+		cfg.EDGI.Wifi = append(cfg.EDGI.Wifi, config.Wifi{
 			Name:       name,
 			Passphrase: pass,
 		})
@@ -263,7 +263,7 @@ func AskWifi(cfg *config.CloudConfig) error {
 }
 
 func AskGithub(cfg *config.CloudConfig) error {
-	if len(cfg.SSHAuthorizedKeys) > 0 || cfg.K3OS.Password != "" {
+	if len(cfg.SSHAuthorizedKeys) > 0 || cfg.EDGI.Password != "" {
 		return nil
 	}
 
@@ -285,7 +285,7 @@ func AskGithub(cfg *config.CloudConfig) error {
 }
 
 func AskConfigURL(cfg *config.CloudConfig) error {
-	if cfg.K3OS.Install.ConfigURL != "" {
+	if cfg.EDGI.Install.ConfigURL != "" {
 		return nil
 	}
 
@@ -303,6 +303,6 @@ func AskConfigURL(cfg *config.CloudConfig) error {
 		return err
 	}
 
-	cfg.K3OS.Install.ConfigURL = str
+	cfg.EDGI.Install.ConfigURL = str
 	return nil
 }

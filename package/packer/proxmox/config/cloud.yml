@@ -19,6 +19,6 @@ write_files:
     owner: root
     permissions: '0644'
 
-k3os:
+edgi:
   datasource: cdrom
   password: YourSSHPasswordReplaceIt

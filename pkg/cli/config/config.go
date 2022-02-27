@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/rancher/k3os/pkg/cc"
-	"github.com/rancher/k3os/pkg/config"
+	"edgi.io/cmd/edgi/pkg/cc"
+	"edgi.io/cmd/edgi/pkg/config"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
