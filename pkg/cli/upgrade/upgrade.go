@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"edgi.io/cmd/edgi/pkg/system"
+	"github.com/edgi-io/edgi-os/pkg/system"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 	"golang.org/x/sys/unix"

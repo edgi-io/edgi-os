@@ -28,7 +28,7 @@ fi
 op=$1
 shift
 
-: ${TOOLBOX_IMAGE:=docker.io/library/ubuntu:bionic}
+: ${TOOLBOX_IMAGE:=docker.io/library/ubuntu:jammy}
 : ${TOOLBOX_SHELL:=sh}
 
 # Check if the toolbox exists

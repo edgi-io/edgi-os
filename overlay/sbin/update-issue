@@ -2,14 +2,7 @@
 
 . /etc/os-release
 cat > /etc/issue << "COW"
-               ,        ,
-  ,------------|'------'|  _     ____
- / .           '-'    |-' | |   |___ \\
- \\/|             |    |   | | __  __) |  ___   ___
-   |   .________.'----'   | |/ / |__ <  / _ \\ / __|
-   |   |        |   |     |   <  ___) || (_) |\\__ \\
-   \\___/        \\___/     |_|\\_\\|____/  \\___/ |___/
-
+*-* EDGI *-*
 COW
 
 cat >> /etc/issue << EOF
@@ -23,5 +16,5 @@ $(ip -br addr show | grep -E -v '^(lo|flannel|cni|veth)')
 EOF
 cat >> /etc/issue << "EOF"
 
-Welcome to k3OS (login with user: edgi)
+Welcome to EDGI (login with user: edgi)
 EOF

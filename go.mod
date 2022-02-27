@@ -1,4 +1,4 @@
-module edgi.io/cmd/edgi
+module github.com/edgi-io/edgi-os
 
 go 1.16
 

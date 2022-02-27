@@ -11,15 +11,15 @@ import (
 	"strconv"
 	"strings"
 
-	"edgi.io/cmd/edgi/pkg/command"
-	"edgi.io/cmd/edgi/pkg/config"
-	"edgi.io/cmd/edgi/pkg/hostname"
-	"edgi.io/cmd/edgi/pkg/mode"
-	"edgi.io/cmd/edgi/pkg/module"
-	"edgi.io/cmd/edgi/pkg/ssh"
-	"edgi.io/cmd/edgi/pkg/sysctl"
-	"edgi.io/cmd/edgi/pkg/version"
-	"edgi.io/cmd/edgi/pkg/writefile"
+	"github.com/edgi-io/edgi-os/pkg/command"
+	"github.com/edgi-io/edgi-os/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/hostname"
+	"github.com/edgi-io/edgi-os/pkg/mode"
+	"github.com/edgi-io/edgi-os/pkg/module"
+	"github.com/edgi-io/edgi-os/pkg/ssh"
+	"github.com/edgi-io/edgi-os/pkg/sysctl"
+	"github.com/edgi-io/edgi-os/pkg/version"
+	"github.com/edgi-io/edgi-os/pkg/writefile"
 	"github.com/sirupsen/logrus"
 )
 
@@ -139,9 +139,9 @@ func ApplyK3S(cfg *config.CloudConfig, restart, install bool) error {
 		labels = append(labels, fmt.Sprintf("%s=%s", k, v))
 	}
 	if mode != "" {
-		labels = append(labels, fmt.Sprintf("edgi.io/mode=%s", mode))
+		labels = append(labels, fmt.Sprintf("edgi.io/edgi-os/mode=%s", mode))
 	}
-	labels = append(labels, fmt.Sprintf("edgi.io/version=%s", version.Version))
+	labels = append(labels, fmt.Sprintf("edgi.io/edgi-os/version=%s", version.Version))
 	sort.Strings(labels)
 
 	for _, l := range labels {

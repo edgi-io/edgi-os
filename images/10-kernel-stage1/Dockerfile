@@ -17,17 +17,21 @@ RUN apt-get --assume-yes update \
  && echo 'nls_iso8859_1' >> /etc/initramfs-tools/modules
 
 ARG ARCH
-ENV KVERSION=5.4.0-88-generic
-ENV URL=https://edgi.io/cmd/edgi-kernel/releases/download/5.15.0‑22.22
+ENV KVERSION=5.15.0-22-generic
+#ENV URL=https://github.com/edgi-io/edgi-kernel/releases/download/5.15.0‑22.22-edgi0
+ENV URL=./kernel
 ENV KERNEL_XZ=${URL}/kernel-generic_${ARCH}.tar.xz
 ENV KERNEL_EXTRA_XZ=${URL}/kernel-extra-generic_${ARCH}.tar.xz
 ENV KERNEL_HEADERS_XZ=${URL}/kernel-headers-generic_${ARCH}.tar.xz
 
 # Download kernel
 RUN mkdir -p /usr/src
-RUN curl -fL $KERNEL_XZ -o /usr/src/kernel.tar.xz
-RUN curl -fL $KERNEL_EXTRA_XZ -o /usr/src/kernel-extra.tar.xz
-RUN curl -fL $KERNEL_HEADERS_XZ -o /usr/src/kernel-headers.tar.xz
+ADD $KERNEL_XZ /usr/src/kernel.tar.xz
+ADD $KERNEL_EXTRA_XZ /usr/src/kernel-extra.tar.xz
+ADD $KERNEL_HEADERS_XZ /usr/src/kernel-headers.tar.xz
+#RUN curl -fL $KERNEL_XZ -o /usr/src/kernel.tar.xz
+#RUN curl -fL $KERNEL_EXTRA_XZ -o /usr/src/kernel-extra.tar.xz
+#RUN curl -fL $KERNEL_HEADERS_XZ -o /usr/src/kernel-headers.tar.xz
 
 # Extract to /usr/src/root
 RUN mkdir -p /usr/src/root && \

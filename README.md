@@ -1,10 +1,10 @@
 
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/cmd/edgi)
-![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/cmd/edgi?include_prereleases&label=release&sort=semver)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/edgi-io/edgi-os)
+![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/edgi-io/edgi-os?include_prereleases&label=release&sort=semver)
 
-# k3OS
+# EDGI OS
 
-k3OS is a Linux distribution designed to remove as much OS maintenance
+EDGI OS is a Linux distribution designed to remove as much OS maintenance
 as possible in a Kubernetes cluster. It is specifically designed to only
 have what is needed to run [k3s](https://github.com/rancher/k3s). Additionally
 the OS is designed to be managed by `kubectl` once a cluster is bootstrapped.
@@ -21,7 +21,7 @@ from Kubernetes. Both k3OS and k3s upgrades are handled by the k3OS operator.
 
 ## Quick Start
 
-Download the ISO from the latest [release](https://edgi.io/cmd/edgi/releases) and run it
+Download the ISO from the latest [release](https://github.com/edgi-io/edgi-os/releases) and run it
 in VMware, VirtualBox, KVM, or bhyve. The server will automatically start a single node Kubernetes cluster.
 Log in with the user `rancher` and run `kubectl`. This is a "live install" running from the ISO media
 and changes will not persist after reboot.
@@ -111,7 +111,7 @@ Below is a reference of all cmdline args used to automate installation
 | edgi.install.force_efi  | false   | true                                              | Force EFI installation even when EFI is not detected |
 | edgi.install.device     |         | /dev/vda                                          | Device to partition and format (/dev/sda, /dev/vda) |
 | edgi.install.config_url |         | [https://gist.github.com/.../dweomer.yaml](https://gist.github.com/dweomer/8750d56fb21a3fbc8d888609d6e74296#file-dweomer-yaml) | The URL of the config to be installed at `/edgi/system/config.yaml` |
-| edgi.install.iso_url    |         | https://edgi.io/cmd/edgi/../edgi-amd64.iso | ISO to download and install from if booting from kernel/vmlinuz and not ISO. |
+| edgi.install.iso_url    |         | https://github.com/edgi-io/edgi-os/../edgi-amd64.iso | ISO to download and install from if booting from kernel/vmlinuz and not ISO. |
 | edgi.install.no_format  |         | true                                              | Do not partition and format, assume layout exists already |
 | edgi.install.tty        | auto    | ttyS0                                             | The tty device used for console |
 | edgi.install.debug      | false   | true                                              | Run installation with more logging and configure debug for installed system |
@@ -130,7 +130,7 @@ This script will run the same installation as the ISO but is a bit more raw and 
 ```
 Usage: ./install.sh [--force-efi] [--debug] [--tty TTY] [--poweroff] [--takeover] [--no-format] [--config https://.../config.yaml] DEVICE ISO_URL
 
-Example: ./install.sh /dev/vda https://edgi.io/cmd/edgi/releases/download/v0.10.0/edgi.iso
+Example: ./install.sh /dev/vda https://github.com/edgi-io/edgi-os/releases/download/v0.10.0/edgi.iso
 
 DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the EDGI_STATE partition (/dev/vda2)
 
@@ -170,7 +170,7 @@ and run with the `--takeover` flag. This will install k3OS to the current root a
 In order for this to work a couple of assumptions are made. First the root (/) is assumed to be an ext4 partition. Also it is assumed that grub2 is installed and looking for the configuration at `/boot/grub/grub.cfg`. When running `--takeover` ensure that you also set `--no-format` and DEVICE must be set to the partition of `/`. Refer to the AWS packer template to see this mode in action. Below is any example of how to run a takeover installation.
 
 ```bash
-./install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/vda1 https://edgi.io/cmd/edgi/releases/download/v0.10.0/edgi.iso
+./install.sh --takeover --debug --tty ttyS0 --config /tmp/config.yaml --no-format /dev/vda1 https://github.com/edgi-io/edgi-os/releases/download/v0.10.0/edgi.iso
 ```
 
 ### ARM Overlay Installation
@@ -180,7 +180,7 @@ All you must do is boot the ARM system and then extract `edgi-rootfs-arm.tar.gz`
 look at the example below) and then place your cloud-config at `/edgi/system/config.yaml`. For example:
 
 ```bash
-curl -sfL https://edgi.io/cmd/edgi/releases/download/v0.10.0/edgi-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
+curl -sfL https://github.com/edgi-io/edgi-os/releases/download/v0.10.0/edgi-rootfs-arm.tar.gz | tar zxvf - --strip-components=1 -C /
 cp myconfig.yaml /edgi/system/config.yaml
 sync
 reboot -f
@@ -350,9 +350,9 @@ the cluster.
 
 ### Automatic Upgrades
 
-Integration with [rancher/system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) has been implemented as of [v0.9.0](https://edgi.io/cmd/edgi/releases/tag/v0.9.0).
-To enable a k3OS node to automatically upgrade from the [latest GitHub release](https://edgi.io/cmd/edgi/releases/latest) you will need to make sure it has the label
-`edgi.io/upgrade` with value `latest` (for k3OS versions prior to v0.11.x please use label `plan.upgrade.cattle.io/edgi-latest`). The upgrade controller will then spawn an upgrade job
+Integration with [rancher/system-upgrade-controller](https://github.com/rancher/system-upgrade-controller) has been implemented as of [v0.9.0](https://github.com/edgi-io/edgi-os/releases/tag/v0.9.0).
+To enable a k3OS node to automatically upgrade from the [latest GitHub release](https://github.com/edgi-io/edgi-os/releases/latest) you will need to make sure it has the label
+`edgi.io/edgi-os/upgrade` with value `latest` (for k3OS versions prior to v0.11.x please use label `plan.upgrade.cattle.io/edgi-latest`). The upgrade controller will then spawn an upgrade job
 that will drain most pods, upgrade the k3OS content under `/edgi/system`, and then reboot. The system should come back up running the latest
 kernel and k3s version bundled with k3OS and ready to schedule pods.
 
@@ -367,7 +367,7 @@ kubectl apply -f https://raw.githubusercontent.com/cmd/edgi/v0.10.0/overlay/shar
 # after the system-upgrade-controller pod is Ready, apply the plan manifest (once per cluster)
 kubectl apply -f https://raw.githubusercontent.com/cmd/edgi/v0.10.0/overlay/share/rancher/k3s/server/manifests/system-upgrade-plans/edgi-latest.yaml
 # apply the `plan.upgrade.cattle.io/edgi-latest` label as described above (for every k3OS node), e.g.
-kubectl label nodes -l edgi.io/mode plan.upgrade.cattle.io/edgi-latest=enabled # this should work on any cluster with k3OS installations at v0.7.0 or greater
+kubectl label nodes -l edgi.io/edgi-os/mode plan.upgrade.cattle.io/edgi-latest=enabled # this should work on any cluster with k3OS installations at v0.7.0 or greater
 ```
 
 ### Manual Upgrades
@@ -394,7 +394,7 @@ To build k3OS you just need Docker and then run `make`. All artifacts will be pu
 If you are running on Linux you can run `./scripts/run` to run a VM of k3OS in the terminal. To exit
 the instance type `CTRL+a c` to get the qemu console and then `q` for quit.
 
-The source for the kernel is in `https://edgi.io/cmd/edgi-kernel` and similarly you
+The source for the kernel is in `https://github.com/edgi-io/edgi-os-kernel` and similarly you
 just need to have Docker and run `make` to compile the kernel.
 
 ## Configuration Reference

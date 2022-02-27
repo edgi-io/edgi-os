@@ -10,4 +10,4 @@ packer build -var-file=vars.json template.json
 
 ## Notes
 
-Can define IP and other parameter on config/cloud.yml, according to [Configuration Reference](https://edgi.io/cmd/edgi/blob/master/README.md#configuration-reference)
+Can define IP and other parameter on config/cloud.yml, according to [Configuration Reference](https://github.com/edgi-io/edgi-os/blob/master/README.md#configuration-reference)

@@ -53,7 +53,7 @@ usage()
 {
     echo "Usage: $PROG [--force-efi] [--debug] [--tty TTY] [--poweroff] [--takeover] [--no-format] [--config https://.../config.yaml] DEVICE ISO_URL"
     echo ""
-    echo "Example: $PROG /dev/vda https://edgi.io/cmd/edgi/releases/download/v0.8.0/edgi.iso"
+    echo "Example: $PROG /dev/vda https://github.com/edgi-io/edgi-os/releases/download/v0.8.0/edgi.iso"
     echo ""
     echo "DEVICE must be the disk that will be partitioned (/dev/vda). If you are using --no-format it should be the device of the EDGI_STATE partition (/dev/vda2)"
     echo ""

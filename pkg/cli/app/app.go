@@ -3,11 +3,11 @@ package app
 import (
 	"fmt"
 
-	"edgi.io/cmd/edgi/pkg/cli/config"
-	"edgi.io/cmd/edgi/pkg/cli/install"
-	"edgi.io/cmd/edgi/pkg/cli/rc"
-	"edgi.io/cmd/edgi/pkg/cli/upgrade"
-	"edgi.io/cmd/edgi/pkg/version"
+	"github.com/edgi-io/edgi-os/pkg/cli/config"
+	"github.com/edgi-io/edgi-os/pkg/cli/install"
+	"github.com/edgi-io/edgi-os/pkg/cli/rc"
+	"github.com/edgi-io/edgi-os/pkg/cli/upgrade"
+	"github.com/edgi-io/edgi-os/pkg/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )

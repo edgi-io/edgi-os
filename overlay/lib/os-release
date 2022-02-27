@@ -1,10 +1,10 @@
-NAME="k3OS"
-VERSION="k3OS %VERSION%"
+NAME="EDGI"
+VERSION="EDGI %VERSION%"
 ID=edgi
 ID_LIKE=alpine
-PRETTY_NAME="k3OS %VERSION%"
+PRETTY_NAME="EDGI %VERSION%"
 VERSION_ID="%VERSION%"
-HOME_URL="https://edgi.io/"
-SUPPORT_URL="https://edgi.io/"
-BUG_REPORT_URL="https://edgi.io/cmd/edgi/issues"
-ISO_URL="https://edgi.io/cmd/edgi/releases/download/%VERSION%/edgi-%ARCH%.iso"
+HOME_URL="https://edgi.io/edgi-os/"
+SUPPORT_URL="https://edgi.io/edgi-os/"
+BUG_REPORT_URL="https://github.com/edgi-io/edgi-os/issues"
+ISO_URL="https://github.com/edgi-io/edgi-os/releases/download/%VERSION%/edgi-%ARCH%.iso"

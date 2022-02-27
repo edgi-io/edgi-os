@@ -9,9 +9,9 @@ import (
 
 	"github.com/docker/docker/pkg/mount"
 	"github.com/docker/docker/pkg/reexec"
-	"edgi.io/cmd/edgi/pkg/cli/app"
-	"edgi.io/cmd/edgi/pkg/enterchroot"
-	"edgi.io/cmd/edgi/pkg/transferroot"
+	"github.com/edgi-io/edgi-os/pkg/cli/app"
+	"github.com/edgi-io/edgi-os/pkg/enterchroot"
+	"github.com/edgi-io/edgi-os/pkg/transferroot"
 	"github.com/sirupsen/logrus"
 )
 

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	"edgi.io/cmd/edgi/pkg/cc"
-	"edgi.io/cmd/edgi/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/cc"
+	"github.com/edgi-io/edgi-os/pkg/config"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )

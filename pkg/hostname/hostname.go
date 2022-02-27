@@ -7,7 +7,7 @@ import (
 	"strings"
 	"syscall"
 
-	"edgi.io/cmd/edgi/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/config"
 )
 
 func SetHostname(c *config.CloudConfig) error {

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"edgi.io/cmd/edgi/pkg/cliinstall"
-	"edgi.io/cmd/edgi/pkg/mode"
+	"github.com/edgi-io/edgi-os/pkg/cliinstall"
+	"github.com/edgi-io/edgi-os/pkg/mode"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )

@@ -5,7 +5,7 @@ import (
 	"path"
 	"strings"
 
-	"edgi.io/cmd/edgi/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/config"
 )
 
 func ConfigureSysctl(cfg *config.CloudConfig) error {

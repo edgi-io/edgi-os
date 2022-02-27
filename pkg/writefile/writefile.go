@@ -7,8 +7,8 @@ import (
 	"os/exec"
 	"path"
 
-	"edgi.io/cmd/edgi/pkg/config"
-	"edgi.io/cmd/edgi/pkg/util"
+	"github.com/edgi-io/edgi-os/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/util"
 	"github.com/sirupsen/logrus"
 )
 

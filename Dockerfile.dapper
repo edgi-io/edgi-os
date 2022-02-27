@@ -10,7 +10,7 @@ RUN if [ "$(go env GOARCH)" = "arm64" ]; then \
 
 ENV DAPPER_RUN_ARGS --privileged -v /tmp:/tmp -v edgi-pkg:/go/pkg -v edgi-cache:/root/.cache/go-build
 ENV DAPPER_ENV REPO TAG DRONE_TAG
-ENV DAPPER_SOURCE /go/src/edgi.io/cmd/edgi/
+ENV DAPPER_SOURCE /go/src/github.com/edgi-io/edgi-os/
 ENV DAPPER_OUTPUT ./build ./dist
 ENV DAPPER_DOCKER_SOCKET true
 ENV HOME ${DAPPER_SOURCE}

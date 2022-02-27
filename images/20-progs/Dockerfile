@@ -14,12 +14,12 @@ RUN gobuild -o /output/metadata
 
 FROM gobuild as edgi
 ARG VERSION
-COPY go.mod $GOPATH/src/edgi.io/cmd/edgi/
-COPY go.sum $GOPATH/src/edgi.io/cmd/edgi/
-COPY /pkg/ $GOPATH/src/edgi.io/cmd/edgi/pkg/
-COPY /main.go $GOPATH/src/edgi.io/cmd/edgi/
-COPY /vendor/ $GOPATH/src/edgi.io/cmd/edgi/vendor/
-WORKDIR $GOPATH/src/edgi.io/cmd/edgi
+COPY go.mod $GOPATH/src/github.com/edgi-io/edgi-os/
+COPY go.sum $GOPATH/src/github.com/edgi-io/edgi-os/
+COPY /pkg/ $GOPATH/src/github.com/edgi-io/edgi-os/pkg/
+COPY /main.go $GOPATH/src/github.com/edgi-io/edgi-os/
+COPY /vendor/ $GOPATH/src/github.com/edgi-io/edgi-os/vendor/
+WORKDIR $GOPATH/src/github.com/edgi-io/edgi-os
 RUN gobuild -mod=readonly -o /output/edgi
 
 FROM gobuild

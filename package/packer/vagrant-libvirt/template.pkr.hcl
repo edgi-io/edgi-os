@@ -16,7 +16,7 @@ variable "iso_checksum" {
 
 variable "iso_url" {
   type    = string
-  default = "https://edgi.io/cmd/edgi/releases/download/v0.20.7-k3s1r0/edgi-amd64.iso"
+  default = "https://github.com/edgi-io/edgi-os/releases/download/v0.20.7-k3s1r0/edgi-amd64.iso"
 }
 
 variable "password" {

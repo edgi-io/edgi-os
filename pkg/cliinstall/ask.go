@@ -9,10 +9,10 @@ import (
 	"os/exec"
 	"strings"
 
-	"edgi.io/cmd/edgi/pkg/config"
-	"edgi.io/cmd/edgi/pkg/mode"
-	"edgi.io/cmd/edgi/pkg/questions"
-	"edgi.io/cmd/edgi/pkg/util"
+	"github.com/edgi-io/edgi-os/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/mode"
+	"github.com/edgi-io/edgi-os/pkg/questions"
+	"github.com/edgi-io/edgi-os/pkg/util"
 )
 
 func Ask(cfg *config.CloudConfig) (bool, error) {

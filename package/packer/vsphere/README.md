@@ -8,7 +8,7 @@ This image does not utilize a cloud-init config and instead utilizes the boot co
 
 ## Quick start
 
-Download the [latest version](https://edgi.io/cmd/edgi/releases/latest) version of edgi and copy it to your vCenter datastore.
+Download the [latest version](https://github.com/edgi-io/edgi-os/releases/latest) version of edgi and copy it to your vCenter datastore.
 
 Assuming that packer and packer-builder-vware-iso are installed you will run the following commands:
 

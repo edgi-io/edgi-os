@@ -41,7 +41,7 @@
     }
   ],
   "variables": {
-    "iso_url": "https://edgi.io/cmd/edgi/releases/download/v0.11.0/edgi-amd64.iso",
+    "iso_url": "https://github.com/edgi-io/edgi-os/releases/download/v0.11.0/edgi-amd64.iso",
     "edgi_version": "v0.11.0",
     "region": "hel1-dc2"
   }

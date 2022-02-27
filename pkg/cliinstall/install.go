@@ -7,8 +7,8 @@ import (
 	"os/exec"
 
 	"github.com/ghodss/yaml"
-	"edgi.io/cmd/edgi/pkg/config"
-	"edgi.io/cmd/edgi/pkg/questions"
+	"github.com/edgi-io/edgi-os/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/questions"
 )
 
 func Run() error {

@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/paultag/go-modprobe"
-	"edgi.io/cmd/edgi/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/config"
 	"github.com/sirupsen/logrus"
 )
 

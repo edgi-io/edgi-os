@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"edgi.io/cmd/edgi/pkg/system"
+	"github.com/edgi-io/edgi-os/pkg/system"
 )
 
 func Get(prefix ...string) (string, error) {

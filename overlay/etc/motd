@@ -1,8 +1,8 @@
-Welcome to k3OS!
+Welcome to EDGI!
 
-Refer to https://edgi.io/cmd/edgi for README and issues.
+Refer to https://edgi.io/edgi-os for README and issues.
 
-The default mode of k3OS is to run a single node cluster. Use "kubectl"
+The default mode of EDGI is to run a single node cluster. Use "kubectl"
 to access it. The node token in /var/lib/rancher/k3s/server/node-token
 can be used to join agents to this server.
 

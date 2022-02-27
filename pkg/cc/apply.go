@@ -1,7 +1,7 @@
 package cc
 
 import (
-	"edgi.io/cmd/edgi/pkg/config"
+	"github.com/edgi-io/edgi-os/pkg/config"
 	"github.com/urfave/cli"
 )
 
