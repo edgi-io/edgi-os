@@ -1,4 +1,4 @@
-# k3OS on Vagrant using the libvirt provider
+# EDGI on Vagrant using the libvirt provider
 
 ## Quick Start
 
@@ -46,6 +46,6 @@ reboot
 SHELL
 ```
 
-The above example also shows how the k3OS config can be changed. When
+The above example also shows how the EDGI config can be changed. When
 you do so, you have to set the password to `edgi`. If this is not the
 case, vagrant will not be able to login.

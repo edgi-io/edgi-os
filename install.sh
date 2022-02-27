@@ -165,7 +165,7 @@ set gfxpayload=keep
 insmod all_video
 insmod gfxterm
 
-menuentry "k3OS Current" {
+menuentry "EDGI Current" {
   search.fs_label EDGI_STATE root
   set sqfile=/edgi/system/kernel/current/kernel.squashfs
   loopback loop0 /\$sqfile
@@ -174,7 +174,7 @@ menuentry "k3OS Current" {
   initrd /edgi/system/kernel/current/initrd
 }
 
-menuentry "k3OS Previous" {
+menuentry "EDGI Previous" {
   search.fs_label EDGI_STATE root
   set sqfile=/edgi/system/kernel/previous/kernel.squashfs
   loopback loop0 /\$sqfile
@@ -183,7 +183,7 @@ menuentry "k3OS Previous" {
   initrd /edgi/system/kernel/previous/initrd
 }
 
-menuentry "k3OS Rescue (current)" {
+menuentry "EDGI Rescue (current)" {
   search.fs_label EDGI_STATE root
   set sqfile=/edgi/system/kernel/current/kernel.squashfs
   loopback loop0 /\$sqfile
@@ -192,7 +192,7 @@ menuentry "k3OS Rescue (current)" {
   initrd /edgi/system/kernel/current/initrd
 }
 
-menuentry "k3OS Rescue (previous)" {
+menuentry "EDGI Rescue (previous)" {
   search.fs_label EDGI_STATE root
   set sqfile=/edgi/system/kernel/previous/kernel.squashfs
   loopback loop0 /\$sqfile

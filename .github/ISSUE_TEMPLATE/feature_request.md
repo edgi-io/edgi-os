@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-Thanks for helping us to improve k3OS! We welcome all feature requests. Please fill out each area of the template so we can better understand the request. ***You can delete this message portion of the bug report.***
+Thanks for helping us to improve EDGI! We welcome all feature requests. Please fill out each area of the template so we can better understand the request. ***You can delete this message portion of the bug report.***
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]

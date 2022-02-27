@@ -1,7 +1,7 @@
 
 variable "box_description" {
   type    = string
-  default = "k3OS is a Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster"
+  default = "EDGI is a Linux distribution designed to remove as much OS maintenance as possible in a Kubernetes cluster"
 }
 
 variable "box_version" {

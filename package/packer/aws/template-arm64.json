@@ -19,7 +19,7 @@
       },
       "ssh_username": "ubuntu",
       "tags": {
-        "Name": "k3OS",
+        "Name": "EDGI",
         "Version": "{{user `edgi_version`}}"
       },
       "type": "amazon-ebs"

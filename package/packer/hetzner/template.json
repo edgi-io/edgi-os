@@ -9,7 +9,7 @@
           "snapshot_name": "edgi-os-{{user `edgi_version`}}-amd64-{{isotime `200601020304`}}",
           "snapshot_labels":[
             {
-              "name": "k3OS",
+              "name": "EDGI",
               "version": "{{user `edgi_version`}}"
             }]
       }],
