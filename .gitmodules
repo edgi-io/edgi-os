@@ -1,3 +1,0 @@
-[submodule "tailscale"]
-	path = pkg/tailscale
-	url = https://github.com/tailscale/tailscale

@@ -18,8 +18,8 @@ RUN apt-get --assume-yes update \
 
 ARG ARCH
 ENV KVERSION=5.15.0-22-generic
-#ENV URL=https://github.com/edgi-io/edgi-kernel/releases/download/5.15.0‑22.22-edgi0
-ENV URL=./kernel
+ENV URL=https://edgi-infra-bootstrap.s3.eu-north-1.amazonaws.com/build/edgi-kernel
+#ENV URL=./kernel
 ENV KERNEL_XZ=${URL}/kernel-generic_${ARCH}.tar.xz
 ENV KERNEL_EXTRA_XZ=${URL}/kernel-extra-generic_${ARCH}.tar.xz
 ENV KERNEL_HEADERS_XZ=${URL}/kernel-headers-generic_${ARCH}.tar.xz

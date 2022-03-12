@@ -12,17 +12,18 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/rancher/mapper v0.0.0-20190814232720-058a8b7feb99
 	github.com/rancher/wrangler v0.3.1 // indirect
+	github.com/russross/blackfriday/v2 v2.0.1
 	github.com/sirupsen/logrus v1.8.1
 	github.com/urfave/cli v1.22.2
 	golang.org/x/crypto v0.0.0-20211202192323-5770296d904e
 	golang.org/x/sys v0.0.0-20220128215802-99c3d69c2c27
+	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1
 	gopkg.in/freddierice/go-losetup.v1 v1.0.0-20170407175016-fc9adea44124
-	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a // indirect
-	tailscale.com v1.22.0 // indirect
+	gopkg.in/yaml.v2 v2.2.4
+	pault.ag/go/topsort v0.0.0-20160530003732-f98d2ad46e1a
 )
 
 replace (
-        tailscale.vom => ./pkg/tailscale
 	k8s.io/api => github.com/rancher/kubernetes/staging/src/k8s.io/api v1.16.3-k3s.2
 	k8s.io/apiextensions-apiserver => github.com/rancher/kubernetes/staging/src/k8s.io/apiextensions-apiserver v1.16.3-k3s.2
 	k8s.io/apimachinery => github.com/rancher/kubernetes/staging/src/k8s.io/apimachinery v1.16.3-k3s.2

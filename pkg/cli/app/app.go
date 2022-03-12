@@ -7,6 +7,8 @@ import (
 	"github.com/edgi-io/edgi-os/pkg/cli/install"
 	"github.com/edgi-io/edgi-os/pkg/cli/rc"
 	"github.com/edgi-io/edgi-os/pkg/cli/upgrade"
+	//"github.com/edgi-io/edgi-os/pkg/cli/net"
+	//"github.com/edgi-io/edgi-os/pkg/cli/tailscale"
 	"github.com/edgi-io/edgi-os/pkg/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -20,7 +22,7 @@ var (
 func New() *cli.App {
 	app := cli.NewApp()
 	app.Name = "edgi"
-	app.Usage = "Booting to k3s so you don't have to"
+	app.Usage = "Booting to EDGI so you don't have to"
 	app.Version = version.Version
 	cli.VersionPrinter = func(c *cli.Context) {
 		fmt.Printf("%s version %s\n", app.Name, app.Version)
@@ -40,6 +42,8 @@ func New() *cli.App {
 		config.Command(),
 		install.Command(),
 		upgrade.Command(),
+		//net.Command(),
+		//tailscale.Command(),
 	}
 
 	app.Before = func(c *cli.Context) error {
