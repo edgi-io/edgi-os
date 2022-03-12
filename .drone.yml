@@ -15,7 +15,7 @@ steps:
   - "until (echo | nc local:/var/run/docker.sock | grep -q HTTP); do echo 'waiting for docker.sock'; sleep 2; done"
   - dapper ci
   volumes:
-  - name: dind
+  - name: dockersock
     path: /var/run/dind
 
 - name: upload
@@ -31,10 +31,28 @@ steps:
     target:
       from_secret: drone_bucket_path
 
-volumes:
+services:
 - name: dind
-  host:
-    path: /var/run/dind
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+  - name: docker_var_lib
+    path: /var/lib/docker
+  environment:
+    DOCKER_DRIVER: overlay2
+ 
+volumes:
+- name: dockersock
+  temp: {}
+- name: docker_var_lib
+  temp: {}
+
+#volumes:
+#- name: dind
+#  host:
+#    path: /var/run/dind
 
 ---
 kind: pipeline
@@ -53,7 +71,7 @@ steps:
   - "until (echo | nc local:/var/run/docker.sock | grep -q HTTP); do echo 'waiting for docker.sock'; sleep 2; done"
   - dapper ci
   volumes:
-  - name: dind
+  - name: dockersock
     path: /var/run/dind
 
 - name: upload
@@ -69,8 +87,26 @@ steps:
     target:
       from_secret: drone_bucket_path
 
-volumes:
+services:
 - name: dind
-  host:
-    path: /var/run/dind
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+  - name: docker_var_lib
+    path: /var/lib/docker
+  environment:
+    DOCKER_DRIVER: overlay2
+ 
+volumes:
+- name: dockersock
+  temp: {}
+- name: docker_var_lib
+  temp: {}
+
+#volumes:
+#- name: dind
+#  host:
+#    path: /var/run/dind
 
