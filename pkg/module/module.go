@@ -6,8 +6,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/paultag/go-modprobe"
 	"github.com/edgi-io/edgi-os/pkg/config"
+	"github.com/paultag/go-modprobe"
 	"github.com/sirupsen/logrus"
 )
 

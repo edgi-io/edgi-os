@@ -7,8 +7,6 @@ import (
 	"github.com/edgi-io/edgi-os/pkg/cli/install"
 	"github.com/edgi-io/edgi-os/pkg/cli/rc"
 	"github.com/edgi-io/edgi-os/pkg/cli/upgrade"
-	//"github.com/edgi-io/edgi-os/pkg/cli/net"
-	//"github.com/edgi-io/edgi-os/pkg/cli/tailscale"
 	"github.com/edgi-io/edgi-os/pkg/version"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"

@@ -6,9 +6,9 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/ghodss/yaml"
 	"github.com/edgi-io/edgi-os/pkg/config"
 	"github.com/edgi-io/edgi-os/pkg/questions"
+	"github.com/ghodss/yaml"
 )
 
 func Run() error {
